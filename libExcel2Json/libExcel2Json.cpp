@@ -30,52 +30,6 @@ string WstringToString(const wstring str)
 	delete[] p;
 	return str1;
 }
-string test(const wchar_t * file_path ){
-
-	Book* book = xlCreateBook();
-	Value status = Value();
-	Value count = Value();
-	Json::FastWriter package;
-	if(book)
-	{
-		if(book->load(file_path))
-		{
-			Sheet* sheet = book->getSheet(0);
-			if(sheet)
-			{
-
-				const wchar_t * _sheet = NULL;
-				wstring testID;
-				wstring testCase;
-				int i = 0;
-				do{
-					char buf[5];
-					_sheet = sheet->readStr(i, 0);
-					if(_sheet!=NULL)
-						testID = wstring(_sheet);
-					_sheet = sheet->readStr(i, 1);
-					if(_sheet!=NULL)
-						testCase = wstring(_sheet);
-
-					sprintf(buf,"%d",i);
-					if(_sheet!=NULL){
-						string id = string(buf);
-						count[i] = Value();
-						count[i]["id"] = id;
-						count[i]["TestID"] = WstringToString(testID);
-						count[i++]["TestCase"] = WstringToString(testCase);
-					}
-
-				}while(_sheet!=NULL);
-				//
-			}
-		}
-
-		book->release();
-		return package.write(count);
-	}
-	return NULL;
-}
 /*
 * ===  PUBLIC FUNCTION  ======================================================================
 *         Name:  Excel2Json
